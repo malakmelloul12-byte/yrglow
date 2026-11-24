@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Glow — طلب المنتجات</title>
+  <style>
+    :root {
+      --bg-soft: #faf5ff;
+      --card-bg: #ffffff;
+      --primary: #9d6be0;
+      --primary-dark: #7d4cc2;
+      --accent-pink: #f4d8ee;
+      --accent-lilac: #ede2ff;
+      --text-main: #2d2238;
+      --text-muted: #6e5f7d;
+      --border: #e6d7f7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Arabic", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(160deg, var(--bg-soft) 0%, #fdf2f8 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 20px 14px 40px;
+    }
+
+    .container {
+      max-width: 560px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: 0 14px 36px rgba(125, 76, 194, 0.1);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #d8b4fe 0%, #f5d0fe 55%, #fbcfe8 100%);
+      padding: 26px 20px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.85);
+      color: var(--primary-dark);
+      font-weight: 700;
+      font-size: 13px;
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      color: #3b1e54;
+      margin-bottom: 6px;
+    }
+
+    .header p {
+      font-size: 14px;
+      color: #563770;
+    }
+
+    form {
+      padding: 22px 18px;
+    }
+
+    .section {
+      margin-bottom: 22px;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .product-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fcfaff;
+      margin-bottom: 10px;
+    }
+
+    .product-info {
+      flex: 1;
+    }
+
+    .product-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .product-price {
+      font-size: 13px;
+      color: var(--primary-dark);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .qty-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qty-btn {
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--border);
+      background: var(--accent-lilac);
+      color: var(--primary-dark);
+      border-radius: 9px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .qty-val {
+      min-width: 22px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .field {
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 14px;
+      color: var(--text-main);
+      background: #fff;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(157, 107, 224, 0.15);
+    }
+
+    .summary-box {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 15px;
+      margin-bottom: 18px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+    }
+
+    .summary-row.total {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      border-top: 1px dashed #d6bef2;
+      padding-top: 10px;
+      margin-top: 8px;
+      margin-bottom: 0;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(125, 76, 194, 0.25);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .status-msg {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      line-height: 1.6;
+      display: none;
+    }
+
+    .status-msg.success {
+      display: block;
+      background: #f3e8ff;
+      color: #4c1d95;
+      border: 1px solid #d8b4fe;
+    }
+
+    .status-msg.error {
+      display: block;
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="brand-badge">✨ YOUR GLOW</div>
+      <h1>نموذج طلب المنتجات</h1>
+      <p>إشراقة ناعمة وعناية متكاملة — اطلبي الآن بكل سهولة</p>
+    </div>
+
+    <form id="orderForm">
+      <div class="section">
+        <div class="section-title">1. اختاري المنتجات والكمية</div>
+
+        <div class="product-card" data-name="سيروم الإشراقة اليومي" data-price="120">
+          <div class="product-info">
+            <div class="product-name">سيروم الإشراقة اليومي</div>
+            <div class="product-price">120 درهم</div>
+          </div>
+          <div class="qty-box">
+            <button type="button" class="qty-btn minus">−</button>
+            <span class="qty-val">0</span>
+            <button type="button" class="qty-btn plus">+</button>
+          </div>
+        </div>
+
+        <div class="product-card" data-name="مرطب البشرة المخملي" data-price="95">
+          <div class="product-info">
+            <div class="product-name">مرطب البشرة المخملي</div>
+            <div class="product-price">95 درهم</div>
+          </div>
+          <div class="qty-box">
+            <button type="button" class="qty-btn minus">−</button>
+            <span class="qty-val">0</span>
+            <button type="button" class="qty-btn plus">+</button>
+          </div>
+        </div>
+
+        <div class="product-card" data-name="واقي الشمس الشفاف SPF50" data-price="110">
+          <div class="product-info">
+            <div class="product-name">واقي الشمس الشفاف SPF50</div>
+            <div class="product-price">110 درهم</div>
+          </div>
+          <div class="qty-box">
+            <button type="button" class="qty-btn minus">−</button>
+            <span class="qty-val">0</span>
+            <button type="button" class="qty-btn plus">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">2. معلومات الزبونة والتوصيل</div>
+
+        <div class="field">
+          <label for="fullName">الاسم الكامل *</label>
+          <input type="text" id="fullName" required placeholder="مثال: سلمى المنصوري" />
+        </div>
+
+        <div class="field">
+          <label for="phone">رقم الهاتف / واتساب *</label>
+          <input type="tel" id="phone" required placeholder="مثال: 06XXXXXXXX" />
+        </div>
+
+        <div class="field">
+          <label for="zone">منطقة التوصيل *</label>
+          <select id="zone" required>
+            <option value="" data-fee="0" selected disabled>اختاري منطقة التوصيل</option>
+            <option value="طنجة" data-fee="30">طنجة (30 درهم)</option>
+            <option value="خارج طنجة" data-fee="45">خارج طنجة (45 درهم)</option>
+            <option value="الجنوب" data-fee="50">الجنوب (50 درهم)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="city">المدينة *</label>
+          <input type="text" id="city" required placeholder="مثال: طنجة، الرباط، أكادير..." />
+        </div>
+
+        <div class="field">
+          <label for="address">العنوان الكامل *</label>
+          <textarea id="address" rows="2" required placeholder="الحي، الشارع، رقم المنزل أو تفاصيل إضافية"></textarea>
+        </div>
+      </div>
+
+      <div class="summary-box">
+        <div class="summary-row">
+          <span>ثمن المنتجات:</span>
+          <span id="subtotalText">0 درهم</span>
+        </div>
+        <div class="summary-row">
+          <span>مصاريف التوصيل:</span>
+          <span id="shippingText">0 درهم</span>
+        </div>
+        <div class="summary-row total">
+          <span>المجموع النهائي:</span>
+          <span id="totalText">0 درهم</span>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">تأكيد الطلب وإرساله عبر واتساب</button>
+      <div class="status-msg" id="statusMsg"></div>
+    </form>
+  </div>
+
+  <script>
+    const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxSsiMxjYrWB3YCJv0yRQ6KURIwW_56OZ1z6uU0d0WEu--lttm7SDCzxXLs9HLpoI4lcw/exec";
+    const WHATSAPP_NUMBER = "212722082326";
+
+    const cards = document.querySelectorAll(".product-card");
+    const zoneSelect = document.getElementById("zone");
+    const subtotalText = document.getElementById("subtotalText");
+    const shippingText = document.getElementById("shippingText");
+    const totalText = document.getElementById("totalText");
+    const orderForm = document.getElementById("orderForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const statusMsg = document.getElementById("statusMsg");
+
+    function getSelectedProducts() {
+      const selected = [];
+      cards.forEach((card) => {
+        const qty = parseInt(card.querySelector(".qty-val").textContent, 10) || 0;
+        if (qty > 0) {
+          const name = card.dataset.name;
+          const price = parseInt(card.dataset.price, 10) || 0;
+          selected.push({ name, price, qty, lineTotal: price * qty });
+        }
+      });
+      return selected;
+    }
+
+    function updateSummary() {
+      const products = getSelectedProducts();
+      const subtotal = products.reduce((sum, item) => sum + item.lineTotal, 0);
+      const selectedOption = zoneSelect.options[zoneSelect.selectedIndex];
+      const shipping = selectedOption ? (parseInt(selectedOption.dataset.fee, 10) || 0) : 0;
+      const total = subtotal + shipping;
+
+      subtotalText.textContent = `${subtotal} درهم`;
+      shippingText.textContent = `${shipping} درهم`;
+      totalText.textContent = `${total} درهم`;
+
+      return { products, subtotal, shipping, total, zoneLabel: selectedOption ? selectedOption.value : "" };
+    }
+
+    cards.forEach((card) => {
+      const minusBtn = card.querySelector(".minus");
+      const plusBtn = card.querySelector(".plus");
+      const qtySpan = card.querySelector(".qty-val");
+
+      plusBtn.addEventListener("click", () => {
+        const current = parseInt(qtySpan.textContent, 10) || 0;
+        qtySpan.textContent = current + 1;
+        updateSummary();
+      });
+
+      minusBtn.addEventListener("click", () => {
+        const current = parseInt(qtySpan.textContent, 10) || 0;
+        if (current > 0) {
+          qtySpan.textContent = current - 1;
+          updateSummary();
+        }
+      });
+    });
+
+    zoneSelect.addEventListener("change", updateSummary);
+
+    function showStatus(type, message) {
+      statusMsg.className = `status-msg ${type}`;
+      statusMsg.innerHTML = message;
+    }
+
+    orderForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const summary = updateSummary();
+      if (summary.products.length === 0) {
+        showStatus("error", "المرجو اختيار منتج واحد على الأقل قبل إرسال الطلب.");
+        return;
+      }
+
+      const fullName = document.getElementById("fullName").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const city = document.getElementById("city").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const itemsSummary = summary.products
+        .map((p) => `${p.name} (×${p.qty})`)
+        .join("، ");
+
+      const payload = {
+        fullName,
+        phone,
+        city,
+        zoneLabel: summary.zoneLabel,
+        address,
+        itemsSummary,
+        totalAmount: `${summary.total} درهم`
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "جاري تسجيل الطلب...";
+
+      try {
+        await fetch(SHEET_WEB_APP_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+
+        const waMessage =
+          `مرحباً Your Glow ✨ شكراً لثقتكم، هذا طلب جديد:\n\n` +
+          `👤 الاسم: ${fullName}\n` +
+          `📞 الهاتف: ${phone}\n` +
+          `📍 المنطقة: ${summary.zoneLabel} — ${city}\n` +
+          `🏠 العنوان: ${address}\n` +
+          `🛍️ المنتجات: ${itemsSummary}\n` +
+          `🚚 التوصيل: ${summary.shipping} درهم\n` +
+          `💰 المجموع النهائي: ${summary.total} درهم\n\n` +
+          `شكراً لاختياركم Your Glow، سنتواصل معكم قريباً لتأكيد الطلب 💜`;
+
+        const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
+
+        showStatus(
+          "success",
+          `تم تسجيل طلبك بنجاح في جدول الطلبات 💜 شكراً لاختيارك <strong>Your Glow</strong>!<br><a href="${waUrl}" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;font-weight:700;color:#6d28d9;">اضغطي هنا لفتح واتساب وإرسال تفاصيل الطلب</a>`
+        );
+
+        window.open(waUrl, "_blank", "noopener");
+      } catch (err) {
+        showStatus("error", "وقع خلل مؤقت أثناء التسجيل في الجدول، حاولي مرة أخرى بعد قليل.");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "تأكيد الطلب وإرساله عبر واتساب";
+      }
+    });
+
+    updateSummary();
+  </script>
+</body>
+</html>
